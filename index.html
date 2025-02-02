@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Document</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="logo">Resume<span>Builder</span></div>
+    </div>
+
+    <div class="side-aboutus" id="frontPage">
+        <div class="text-aboutus">
+            <h1>Create a Job-Ready <br> Resume In Minuts </h1>
+            <h4>Easily Create Resume</h4>
+            <div class="line-aboutus"></div>
+            <p>Select a Theme Fill All Information And Generate Your Resume In Just Few Seconds. Try It Now!</p>
+            <a href="#secondPage" class="button-style">Choose Theme</a>
+
+        </div>
+        <div class="img-aboutus">
+            <img src="./WhatsApp Image 2024-11-09 at 8.25.51 AM.jpeg" alt="">
+        </div>
+    </div>
+
+    <div class="secondPage" id="secondPage">
+        <div class="headingSecond">
+            <h1>Choose One Theme To <br> Generate Resume</h1>
+            <p>Choose One Theme Press Next Fill Form And Generate your Resume In few Seconds</p>
+            <p>More Theme Will Be Avaliable Soon!</p>
+        </div>
+        <div class="themeSecond">
+            <img src="./WhatsApp Image 2024-11-09 at 8.25.51 AM (1).jpeg" alt="">
+            <!-- <img src="./theme1.jpeg" alt="Theme 1">
+            <img src="./theme2.jpeg" alt="Theme 2">
+            <img src="./theme3.jpeg" alt="Theme 3"> -->
+        </div>
+        <button onclick="next('secondPage', 'third')" class="btn">Next</button>
+    </div>
+
+    <div id="third" class="third">
+        <div class="form" id="form">
+            <form action="" id="resumeForm" onsubmit="validateAndGenerateResume(event)">
+                <label for="name">Name</label>
+                <input type="text" placeholder="Enter Full Name" id="name" required pattern="[A-Za-z\s]{3,}"
+                    title="Please enter at least 3 alphabetic characters.">
+
+                <label for="profession">Profession</label>
+                <input type="text" placeholder="Enter Profession" id="profession" required pattern="[A-Za-z\s]{3,}"
+                    title="Please enter at least 3 alphabetic characters.">
+
+                <label for="about">About</label>
+                <textarea placeholder="Write About" id="about" required minlength="20" maxlength="500"
+                    title="Please enter between 10 to 500 characters."></textarea>
+
+                <label for="email">E-mail</label>
+                <input type="email" placeholder="Enter e-mail" id="email" required>
+
+                <label for="contact">Contact No</label>
+                <input type="tel" placeholder="Enter Number" id="contact" pattern="[0-9]{11}" required
+                    title="Please enter a 11-digit phone number.">
+
+                <h2>Education</h2>
+                <!-- <div id="edu" class="section"> -->
+                <label for="name">Qualification</label>
+                <input type="text" placeholder="e.g BSC, FSC, Matric" id="qualification" class="qualification" required>
+                <label for="profession">Institute</label>
+                <input type="text" placeholder="Enter Institute Name" id="institute" class="institute" required>
+                <label for="profession">Duration</label>
+                <input type="text" placeholder="e.g (2018-2022)" id="duration" class="duration" required>
+                <!-- </div> -->
+                <div class="msg" id="eduMsg"></div>
+
+                <button onclick="addEdu()">Add More</button>
+
+                <h2>Expertise</h2>
+                <label for="name">Expertise</label>
+                <input type="text" placeholder="Enter Full Name" id="skills" class="skill" required>
+                <div class="msg" id="eduExpertise"></div>
+                <button onclick="addSkill()">Add More</button>
+
+                <h2>Languages</h2>
+                <label for="profession">Languages</label>
+                <input type="text" placeholder="Enter Languages" id="languages" class="language" required>
+                <div class="msg" id="langMsg"></div>
+                <button onclick="addLang()">Add More</button>
+
+
+                <h2>Experiences</h2>
+                <label for="name">Company Name</label>
+                <input type="text" placeholder="Enter Company Name" id="companyname" class="companyname" required>
+                <label for="profession">Position</label>
+                <input type="text" placeholder="Enter Position At Company" id="position" class="position" required>
+                <label for="profession">Duration</label>
+                <input type="text" placeholder="e.g (2018-2022)" id="expduration" class="expduration" required>
+                <label for="profession">Responsiblities</label>
+                <input type="text" placeholder="Enter Responsiblities At Company" id="responsiblities"
+                    class="responsibilities" required>
+                <div class="msg" id="expMsg"></div>
+                <button type="button" onclick="addExp()">Add More</button>
+
+
+                <h2>Portfolio</h2>
+                <label for="name">Platform</label>
+                <input type="text" placeholder="e.g Behance, Linkedin, Github" id="platform" class="platform" required>
+                <label for="profession">Link</label>
+                <input type="text" placeholder="Paste Platform Link" id="link" class="link" required>
+                <div class="msg" id="portMsg"></div>
+                <button onclick="addPort()">Add More</button>
+
+                <button type="submit" onclick="validateAndSubmit()">Generate</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="sixth" style="display: none;">
+        <div id="resumeDisplay">
+            <!-- Your resume content goes here -->
+        </div>
+        <div style="margin-top: 20px;">
+            <button class="btn" onclick="printCard()">Print</button>
+            <button class="btn" onclick="next('sixth', 'third')">Edit</button>
+            <button class="btn" id="downloadBtn">Download</button>
+        </div>
+    </div>
+    
+<script src="./script.js"></script>
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+    document.getElementById("downloadBtn")?.addEventListener("click", async () => {
+        const resume = document.getElementById("resumeDisplay");
+    
+        if (!resume) {
+            console.error("Resume div not found!");
+            return;
+        }
+    
+        // Wait for html2canvas to capture the element
+        html2canvas(resume, { scale: 2 }).then((canvas) => {
+            const imgData = canvas.toDataURL("image/png");
+            const pdf = new window.jspdf.jsPDF("p", "mm", "a4");
+            
+            const imgWidth = 210; // A4 width in mm
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    
+            pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+            pdf.save("resume.pdf");
+        });
+    });
+</script>
+
+
+
+
+
+</body>
+</html>
